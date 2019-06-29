@@ -33,7 +33,7 @@
             <h2 id="configure">
               Configure
             </h2>
-            <label for="countdown">Set timeout in seconds</label>
+            <label for="countdown">Set countdown in seconds</label>
             <select id="countdown">
               <option>1</option>
               <option>2</option>
@@ -46,7 +46,7 @@
               <option>9</option>
               <option>10</option>
             </select>
-            <label for="radio">Record voiceover (from computer mic)?</label>
+            <label for="radio">Record audio (note that this is not stable yet, and audio may not be recorded on all browsers)?</label>
             <input type="radio" name="radio" id="recordaudioyes"> 
             <label for="recordaudioyes">Yes</label><br>
             <input type="radio" name="radio" id="recordaudiono" checked> 
@@ -98,10 +98,13 @@
       const videoData = []
       const wait = document.getElementById('countdown').value * 1000
 
-      const desktopStream = await navigator.mediaDevices.getDisplayMedia({
-        audio: document.getElementById('recordaudioyes').checked,
-        video: true
-      })
+      const setup = {
+        video: true,
+        audio: document.getElementById('recordaudioyes').checked
+      }
+      
+      console.log(setup)
+      const desktopStream = await navigator.mediaDevices.getDisplayMedia(setup)
 
       const recorder = await new MediaRecorder(desktopStream)
 
